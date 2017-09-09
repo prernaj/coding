@@ -1,7 +1,3 @@
-'''
-'''
-
-
 class Node():
     
     def __init__(self, data):
@@ -23,16 +19,22 @@ class LinkedList():
     def __init__(self):
         self._head = None
 
+    def __iter__(self):
+        current = self._head
+        while current:
+            yield current.get_data()
+            current = current.get_next()
+
     def insert_front(self, data):
         new_node = Node(data)
         if self._head == None:
             self._head = new_node
             return self._head
-        temp = self._head
-        while temp and temp.get_next() is not None:
-            temp = temp.get_next()
+        current = self._head
+        while current and current.get_next() is not None:
+            current = current.get_next()
 
-        temp.set_next(new_node)
+        current.set_next(new_node)
         return self._head
 
     def insert_after(self, data, node):
@@ -45,46 +47,36 @@ class LinkedList():
 
     def insert_end(self, data):
         new_node = Node(data)
-        temp = self._head
-        while temp and temp.get_next() is not None:
-            temp = temp.get_next()
-        temp.set_next(new_node)
+        current = self._head
+        while current and current.get_next() is not None:
+            current = current.get_next()
+        current.set_next(new_node)
 
     def get_head(self):
         return self._head
 
-    def print_ll(self):
-        temp = self._head
-        while temp:
-            print temp.get_data(),
-            temp = temp.get_next()
-
     def search_elem(self, key):
-        temp = self._head
-        while temp:
-            if temp.get_data() == key:
-                return temp
-            temp = temp.get_next()
+        current = self._head
+        while current:
+            if current.get_data() == key:
+                return current
+            current = current.get_next()
         return None
 
     
 
 def main():
-    ll = LinkedList()
-    ll.insert_front(1)
-    ll.insert_front(2)
-    h = ll.get_head()
+    link_list_obj = LinkedList()
+    link_list_obj.insert_front(1)
+    link_list_obj.insert_front(2)
+    h = link_list_obj.get_head()
     if h:
-        ll.insert_after(3, h.get_next())
-    ll.insert_end(4)
-    ll.print_ll()
-    s_node = ll.search_elem(2)
-    print s_node.get_data()
+        link_list_obj.insert_after(3, h.get_next())
+    link_list_obj.insert_end(4)
+    for item in link_list_obj:
+        print item,
+    s_node = link_list_obj.search_elem(2)
+    print 'Node at ', s_node.get_data()
 
 if __name__=='__main__':
     main()
-
-
-
-
-

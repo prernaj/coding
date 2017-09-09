@@ -1,6 +1,6 @@
 '''
 given a key, delete the first occurence of this key in linked list.
-to delete a node from linked list, we need to do following steps:
+to delete a node from linked list, we need to do folink_list_objowing steps:
 1. find previous node of the node to be deleted.
 2. change next of previous node
 3. free memory for the node to be deleted
@@ -27,6 +27,12 @@ class LinkedList():
 
     def __init__(self):
         self._head = None
+
+    def __iter__(self):
+        current = self._head
+        while current:
+            yield current.get_data()
+            current = current.get_next()
 
     def insert_front(self, data):
         new_node = Node(data)
@@ -58,12 +64,6 @@ class LinkedList():
     def get_head(self):
         return self._head
 
-    def print_ll(self):
-        temp = self._head
-        while temp:
-            print temp.get_data(),
-            temp = temp.get_next()
-
     def delete_key(self, item):
         temp = self._head
         while temp:
@@ -80,16 +80,16 @@ class LinkedList():
     
 
 def main():
-    ll = LinkedList()
-    ll.insert_front(1)
-    ll.insert_front(2)
-    h = ll.get_head()
+    link_list_obj = LinkedList()
+    link_list_obj.insert_front(1)
+    link_list_obj.insert_front(2)
+    h = link_list_obj.get_head()
     if h:
-        ll.insert_after(3, h.get_next())
-    ll.insert_end(4)
-    ll.print_ll()
-    ll.delete_key(3)
-    ll.print_ll()
+        link_list_obj.insert_after(3, h.get_next())
+    link_list_obj.insert_end(4)
+    link_list_obj.delete_key(3)
+    for item in link_list_obj:
+        print item,
 
 if __name__=='__main__':
     main()

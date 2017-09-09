@@ -1,7 +1,3 @@
-'''
-'''
-
-
 class Node():
     
     def __init__(self, data):
@@ -23,16 +19,22 @@ class LinkedList():
     def __init__(self):
         self._head = None
 
+    def __iter__(self):
+        current = self._head
+        while current:
+            yield current.get_data()
+            current = current.get_next()
+
     def insert_front(self, data):
         new_node = Node(data)
         if self._head == None:
             self._head = new_node
             return self._head
-        temp = self._head
-        while temp and temp.get_next() is not None:
-            temp = temp.get_next()
+        current = self._head
+        while current and current.get_next() is not None:
+            current = current.get_next()
 
-        temp.set_next(new_node)
+        current.set_next(new_node)
         return self._head
 
     def insert_after(self, data, node):
@@ -45,40 +47,62 @@ class LinkedList():
 
     def insert_end(self, data):
         new_node = Node(data)
-        temp = self._head
-        while temp and temp.get_next() is not None:
-            temp = temp.get_next()
-        temp.set_next(new_node)
+        current = self._head
+        while current and current.get_next() is not None:
+            current = current.get_next()
+        current.set_next(new_node)
 
     def get_head(self):
         return self._head
 
-    def print_ll(self):
-        temp = self._head
-        while temp:
-            print temp.get_data(),
-            temp = temp.get_next()
-
-    def swap_elem(key1, key2):
-        # TODO
-        pass
-    
+    def swap_elem(self, key1, key2):
+        print 'Swapping', key1, key2
+        first_node = second_node = prev_first_node = prev_second_node = None
+        if self._head.get_data() == key1:
+            first_node = self._head
+        if self._head.get_data() == key2:
+            second_node = self._head
+        current = self._head
+        while current:
+            if first_node and second_node:
+                break
+            next_elem = current.get_next()
+            if next_elem:
+                if next_elem.get_data() == key1:
+                    prev_first_node = current
+                    first_node = next_elem
+                if next_elem.get_data() == key2:
+                    prev_second_node = current
+                    second_node = next_elem
+            current = current.get_next()
+        if first_node is None or second_node is None:
+            print 'Cannot swap'
+            return
+        if prev_first_node:
+            prev_first_node.set_next(second_node)
+        if prev_second_node:
+            prev_second_node.set_next(first_node)
+        temp = first_node.get_next()
+        first_node.set_next(second_node.get_next())
+        second_node.set_next(temp)
+        if self._head.get_data() == key1:
+            self._head = second_node
+        elif self._head.get_data() == key2:
+            self._head = first_node
 
 def main():
-    ll = LinkedList()
-    ll.insert_front(1)
-    ll.insert_front(2)
-    h = ll.get_head()
-    if h:
-        ll.insert_after(3, h.get_next())
-    ll.insert_end(4)
-    ll.print_ll()
-    ll.swap_elem(1,2)
+    link_list_obj = LinkedList()
+    link_list_obj.insert_front(1)
+    link_list_obj.insert_front(2)
+    head_node = link_list_obj.get_head()
+    if head_node:
+        link_list_obj.insert_after(3, head_node.get_next())
+    link_list_obj.insert_end(4)
+    for item in link_list_obj:
+        print item,
+    link_list_obj.swap_elem(3,2)
+    for item in link_list_obj:
+        print item,
 
 if __name__=='__main__':
     main()
-
-
-
-
-
