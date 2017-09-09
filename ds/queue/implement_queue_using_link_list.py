@@ -1,13 +1,13 @@
 '''
 in queue data structure there are two main pointers front and rear
 the front points to the first item and rear points to the last item
-enQueue() this operation adds a new node after rear and moves rear to next node
-deQueue() this operation removes the front node and moves front to next
+en_queue() this operation adds a new node after rear and moves rear to next node
+de_queue() this operation removes the front node and moves front to next
 '''
 
 
-class Node():
-    
+class Node(object):
+
     def __init__(self, data):
         self._data = data
         self._next = None
@@ -22,21 +22,27 @@ class Node():
         self._next = node
 
 
-class LinkedList():
+class LinkedList(object):
 
     def __init__(self):
         self._head = None
 
+    def __iter__(self):
+        current = self._head
+        while current:
+            yield current.get_data()
+            current = current.get_next()
+
     def insert_front(self, data):
         new_node = Node(data)
-        if self._head == None:
+        if self._head is None:
             self._head = new_node
             return self._head
-        temp = self._head
-        while temp and temp.get_next() is not None:
-            temp = temp.get_next()
+        current = self._head
+        while current and current.get_next() is not None:
+            current = current.get_next()
 
-        temp.set_next(new_node)
+        current.set_next(new_node)
         return self._head
 
     def insert_after(self, data, node):
@@ -49,40 +55,34 @@ class LinkedList():
 
     def insert_end(self, data):
         new_node = Node(data)
-        temp = self._head
-        if temp == None:
+        current = self._head
+        if current is None:
             self._head = new_node
             return
-        while temp and temp.get_next() is not None:
-            temp = temp.get_next()
-        temp.set_next(new_node)
+        while current and current.get_next() is not None:
+            current = current.get_next()
+        current.set_next(new_node)
 
     def get_head(self):
         return self._head
 
     def get_tail(self):
-        temp = self._head
-        while temp and temp.get_next():
-            temp = temp.get_next()
-        return temp
-
-    def print_ll(self):
-        temp = self._head
-        while temp:
-            print temp.get_data(),
-            temp = temp.get_next()
+        current = self._head
+        while current and current.get_next():
+            current = current.get_next()
+        return current
 
     def delete_head(self):
         elem = self._head
-        if elem == None:
+        if elem is None:
             print 'Cannot delete as it is empty'
             return
         self._head = elem.get_next()
         print 'Deleting', elem.get_data()
         del elem
-    
 
-class Queue():
+
+class Queue(object):
 
     def __init__(self):
         self._front = None
@@ -95,9 +95,9 @@ class Queue():
     def get_rear(self):
         return self._rear
 
-    def enQueue(self, elem):
+    def en_queue(self, elem):
         print 'Enqueuing', elem
-        if self._front == None and self._rear == None:
+        if self._front is None and self._rear is None:
             self._linked_list.insert_end(elem)
             self._front = self._linked_list.get_head()
             self._rear = self._linked_list.get_head()
@@ -106,35 +106,25 @@ class Queue():
         self._rear = self._rear.get_next()
 
 
-    def deQueue(self):
+    def de_queue(self):
         self._linked_list.delete_head()
         self._front = self._linked_list.get_head()
 
-    def isEmpty(self):
-        if self_front == None and self._rear == None:
+    def is_empty(self):
+        if self._front is None and self._rear is None:
             return True
         return False
 
-    def print_queue(self):
-        self._linked_list.print_ll()
-
 
 def main():
-    q = Queue()
-    q.enQueue(1)
-    q.enQueue(2)
-    q.enQueue(3)
-    q.enQueue(4)
-    q.enQueue(5)
-    q.print_queue()
-    q.deQueue()
-    q.deQueue()
-    q.print_queue()
+    queue_obj = Queue()
+    queue_obj.en_queue(1)
+    queue_obj.en_queue(2)
+    queue_obj.en_queue(3)
+    queue_obj.en_queue(4)
+    queue_obj.en_queue(5)
+    queue_obj.de_queue()
+    queue_obj.de_queue()
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
-
-
-
-
-

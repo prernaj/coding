@@ -1,5 +1,5 @@
-class MyQueue():
-    
+class MyQueue(object):
+
     def __init__(self, max_size):
         self._queue = []
         self._size = -1
@@ -11,7 +11,7 @@ class MyQueue():
         else:
             self._size += 1
             self._queue.insert(self._size, elem)
-    
+
     def dequeue(self):
         if self._size == -1:
             print 'Queue is empty'
@@ -19,7 +19,7 @@ class MyQueue():
             ret = self._queue[self._size]
             self._size -= 1
             return ret
-    
+
     def get_size(self):
         return self._size
 
@@ -31,10 +31,10 @@ class MyQueue():
 
 def main():
     max_size = 10
-    q = MyQueue(10)
-    q.enqueue(1)
-    q.enqueue(2)
-    print q.dequeue()
+    queue_obj = MyQueue(max_size)
+    queue_obj.enqueue(1)
+    queue_obj.enqueue(2)
+    print queue_obj.dequeue()
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
